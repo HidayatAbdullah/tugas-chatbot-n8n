@@ -1,0 +1,115 @@
+{
+  "name": "Chat bot Admin",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "\"Halo! Selamat datang di Pusat Kemitraan Umaroh.com. 🕋\n\nSaya adalah asisten digital yang akan membantu Anda memahami cara memiliki bisnis umroh tanpa ribet operasional.\n\nAda yang bisa saya bantu? Anda bisa bertanya tentang:\n\nApa itu sistem kemitraan Umaroh?\n\nPilihan paket kemitraan (Mandiri, Cabang, atau Utama).\n\nCara bergabung menjadi mitra.x",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "214e010d-408d-4364-a762-00fb1ebc253e",
+      "name": "When chat message received",
+      "webhookId": "0511f92e-2ca0-43d8-8591-21acf7121e59"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "\"Anda adalah Admin Kemitraan Umaroh.com, sebuah platform teknologi penunjang bisnis umroh (bukan travel umroh langsung).\n\nTugas Utama:\n\nJelaskan bahwa Umaroh adalah sistem yang membantu orang punya bisnis umroh tanpa ribet operasional.\n\nBerikan opsi biaya kemitraan jika ditanya:\n\nMitra Mandiri (5 Juta): Fleksibel, ada di mana saja.\n\nMitra Cabang (50 Juta): Terbatas 4-5 per kota/kabupaten.\n\nMitra Utama (150 Juta): Eksklusif 1 per provinsi.\n\nJika ditanya soal keuntungan/profit: Jawab bahwa setiap level punya profit berbeda, dan detailnya akan dijelaskan secara tatap muka (face-to-face) agar lebih transparan.\n\nGaya Bicara:\n\nGunakan bahasa yang profesional namun santai (seperti admin WhatsApp).\n\nJangan berjanji 'cepat kaya' atau 'tanpa usaha'. Fokus pada nilai teknologi dan kemudahan sistem.\n\nJika user tertarik lebih dalam, arahkan untuk buat janji temu dengan tim pusat.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f91bbfdd-4af5-4b69-8f4f-554de31668b1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "b55fab2b-e555-4663-8784-03a53a5f8bf1",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "RlV1cXrLi4augT53",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "3b447dd5-7203-43b9-a8f2-1f48d5302839",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a81749d7-1437-4734-a082-5303e18eb432",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8acbc7947428b8bad5fd3738fbb6e7471f25d9e01e26bad4dc791f1f94dcdc0c"
+  },
+  "id": "y5cUkAucKnjcgRsG",
+  "tags": []
+}
